@@ -3,9 +3,9 @@ import { NextPage } from 'next';
 import 'twin.macro';
 
 import SEO from '@/common/seo';
-import Home from '@/components/Container/Homepage';
+import Login from '@/components/Container/Login';
 
-const Index: NextPage = () => {
+const LoginPage: NextPage = () => {
   return (
     <>
       <SEO
@@ -26,9 +26,9 @@ const Index: NextPage = () => {
           site_name: 'Logkar Commerce',
         }}
       />
-      <Home />
+      <Login />
     </>
   );
 };
 
-export default Index;
+export default LoginPage;
