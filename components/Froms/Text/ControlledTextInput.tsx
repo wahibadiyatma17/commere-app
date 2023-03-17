@@ -1,58 +1,45 @@
-import React, { ReactNode, FC } from 'react';
-import * as PropTypes from 'prop-types';
-import { Control, FieldValues, useController } from 'react-hook-form';
+import React, { FC } from 'react';
+import { useController } from 'react-hook-form';
+import { ConnectForm } from '@/common/utils/form';
 
-import { ConnectForm } from 'common/utils/form';
-import TextInput from './TextInput';
+import Input from './TextInput';
+import { ControlledInputProps } from '@/common/types/Input';
 
-type ControlledTextInputProps = {
-  name: string;
-  type?: string;
-  rules?: object;
-  defaultValue?: any;
-  placeholder?: string;
-  disabled?: boolean;
-  readOnly?: boolean;
-  control: Control<FieldValues, any>;
-  [x: string]: any;
-};
-
-const ControlledTextInput: FC<ControlledTextInputProps> = ({
-  name,
-  type,
-  defaultValue = '',
-  placeholder,
-  rules = {},
-  control,
-  disabled,
-  readOnly,
-  ...other
-}) => {
+const Controlledinput: FC<ControlledInputProps> = (props) => {
   const {
-    field: { onChange, onBlur, name: fieldName, value, ref },
-    fieldState: { error },
+    name,
+    disabled = false,
+    readOnly = false,
+    type = 'default',
+    onChange,
+    control,
+    rules = {},
+    defaultValue,
+    ...other
+  } = props;
+  const {
+    field: { onChange: fieldOnChange, onBlur, name: fieldName, value, ref },
   } = useController({
     name,
     control,
     rules,
     defaultValue,
   });
-
   return (
     <ConnectForm>
       {() => (
-        <TextInput
-          onChange={onChange}
+        <Input
+          onChange={(value) => {
+            fieldOnChange(value);
+            if (typeof onChange === 'function') onChange(value);
+          }}
           onBlur={onBlur}
           value={value}
           name={fieldName}
-          placeholder={placeholder}
           ref={ref}
-          type={type}
-          defaultValue={defaultValue}
           disabled={disabled}
           readOnly={readOnly}
-          error={error}
+          type={type}
           {...other}
         />
       )}
@@ -60,24 +47,4 @@ const ControlledTextInput: FC<ControlledTextInputProps> = ({
   );
 };
 
-ControlledTextInput.propTypes = {
-  /**
-   * name is required as the name in the form
-   */
-  name: PropTypes.string.isRequired,
-  /**
-   * type is option as the type of the field
-   */
-  type: PropTypes.string,
-  /**
-   * rules is optional as the rules in
-   * registered field
-   */
-  rules: PropTypes.object,
-  /**
-   * defaultValue is optional as the default value of the field
-   */
-  defaultValue: PropTypes.any,
-};
-
-export default ControlledTextInput;
+export default Controlledinput;

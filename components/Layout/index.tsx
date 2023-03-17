@@ -6,20 +6,29 @@ import { useWindowSize, useRefHeight } from '@/common/utils/helpers';
 
 import Header from './Header';
 import Navigation, { NavigationProps } from './Navigation';
+import ButtonFooter, { ButtonFooterProps } from './ButtonFooter';
 
 interface BaseMobileOnlyLayoutProps {
   children?: React.ReactNode;
   navigationProps?: NavigationProps;
+  buttonFooterprops?: ButtonFooterProps;
+  hasFooter?: boolean;
 }
 
 export type MobileOnlyLayoutProps = BaseMobileOnlyLayoutProps;
 
 const MobileOnlyLayout: FC<MobileOnlyLayoutProps> = (props) => {
-  const { children, navigationProps = { title: 'Logkar Commerce' } } = props;
+  const {
+    children,
+    navigationProps = { title: 'Logkar Commerce' },
+    buttonFooterprops,
+    hasFooter = true,
+  } = props;
   const { width } = useWindowSize();
   const isMobile = width < 768;
 
   const [headerNavigationWrapperRef, headerNavigationWrapperHeight] = useRefHeight();
+  const [footerNavigationWrapperRef, footerNavigationWrapperHeight] = useRefHeight();
 
   return (
     <div tw="flex w-screen h-full md:bg-[#9CFFDD]">
@@ -34,8 +43,14 @@ const MobileOnlyLayout: FC<MobileOnlyLayoutProps> = (props) => {
             <Navigation {...navigationProps} />
           </div>
         </div>
-        {headerNavigationWrapperHeight !== null && (
-          <main css={mainCSS(headerNavigationWrapperHeight)}>{children}</main>
+        <main css={mainCSS()}>{children}</main>
+        {hasFooter && (
+          <div
+            ref={footerNavigationWrapperRef as MutableRefObject<HTMLDivElement>}
+            tw="fixed bottom-0 w-full border border-solid border-white bg-white md:max-w-[27.5rem] z-50"
+          >
+            <ButtonFooter {...buttonFooterprops} />
+          </div>
         )}
       </div>
     </div>
@@ -44,8 +59,8 @@ const MobileOnlyLayout: FC<MobileOnlyLayoutProps> = (props) => {
 
 export default MobileOnlyLayout;
 
-const mainCSS = (paddingTop: number) => css`
-  padding-top: ${paddingTop}px;
+const mainCSS = () => css`
+  padding: 10rem 1rem 0rem 1rem;
 `;
 
 const globalCSS = css`

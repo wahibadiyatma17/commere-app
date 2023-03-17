@@ -1,14 +1,64 @@
-import MobileOnlyLayout from '@/components/Layout';
-import React, { FC } from 'react';
+import React, { FC, useRef, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+import { useRouter } from 'next/router';
 import 'twin.macro';
 
+import MobileOnlyLayout from '@/components/Layout';
+import { ControlledTextInput } from '@/components/Froms/Text';
+
 const Login: FC = () => {
+  const methods = useForm();
+  const router = useRouter();
+  const submitRef = useRef<any>(null);
+  const { handleSubmit, control } = methods;
+
+  const [isShowPassowrd, setIsShowPassword] = useState<boolean>(false);
+
+  const onSubmit = () => {
+    submitRef?.current?.click();
+    router.push('/');
+  };
+
+  const onClick = (data: any) => {};
+
   return (
-    <MobileOnlyLayout navigationProps={{ title: 'Login' }}>
+    <MobileOnlyLayout
+      navigationProps={{ title: 'Login' }}
+      buttonFooterprops={{ onClick: () => onSubmit() }}
+    >
       <div tw="flex flex-col w-full items-center justify-center gap-6">
         <div tw="flex flex-col items-center gap-2">
           <h1 tw="font-semibold text-lg">Selamat datang kembali !</h1>
           <span tw="text-gray-400">Silakan masukkan data berikut untuk Login</span>
+        </div>
+        <div tw="w-full">
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onClick)} tw="space-y-4 pr-7 w-full" id="hook-form">
+              <ControlledTextInput
+                type={'text'}
+                name="id"
+                placeholder="Masukkan email"
+                control={control}
+                rules={{ required: true }}
+              />
+              <ControlledTextInput
+                type={isShowPassowrd ? 'text' : 'password'}
+                name="password"
+                placeholder="Masukkan password"
+                control={control}
+                rules={{ required: true }}
+                suffix={
+                  isShowPassowrd ? (
+                    <AiOutlineEye size={24} onClick={() => setIsShowPassword(false)} />
+                  ) : (
+                    <AiOutlineEyeInvisible size={24} onClick={() => setIsShowPassword(true)} />
+                  )
+                }
+              />
+              <button ref={submitRef} tw="hidden" />
+            </form>
+          </FormProvider>
         </div>
       </div>
     </MobileOnlyLayout>
