@@ -13,6 +13,7 @@ interface BaseMobileOnlyLayoutProps {
   navigationProps?: NavigationProps;
   buttonFooterprops?: ButtonFooterProps;
   hasFooter?: boolean;
+  hasHeader?: boolean;
 }
 
 export type MobileOnlyLayoutProps = BaseMobileOnlyLayoutProps;
@@ -23,6 +24,7 @@ const MobileOnlyLayout: FC<MobileOnlyLayoutProps> = (props) => {
     navigationProps = { title: 'Logkar Commerce' },
     buttonFooterprops,
     hasFooter = true,
+    hasHeader = true,
   } = props;
   const { width } = useWindowSize();
   const isMobile = width < 768;
@@ -39,11 +41,13 @@ const MobileOnlyLayout: FC<MobileOnlyLayoutProps> = (props) => {
           tw="fixed w-full bg-white top-0 border border-solid border-white md:(border-none max-w-[27.5rem]) z-50"
         >
           {!isMobile && <Header />}
-          <div tw="md:(mt-1)">
-            <Navigation {...navigationProps} />
-          </div>
+          {hasHeader && (
+            <div tw="md:(mt-1)">
+              <Navigation {...navigationProps} />
+            </div>
+          )}
         </div>
-        <main css={mainCSS()}>{children}</main>
+        <main css={mainCSS(hasHeader)}>{children}</main>
         {hasFooter && (
           <div
             ref={footerNavigationWrapperRef as MutableRefObject<HTMLDivElement>}
@@ -59,8 +63,8 @@ const MobileOnlyLayout: FC<MobileOnlyLayoutProps> = (props) => {
 
 export default MobileOnlyLayout;
 
-const mainCSS = () => css`
-  padding: 10rem 1rem 0rem 1rem;
+const mainCSS = (hasHeader: boolean) => css`
+  padding: ${hasHeader ? '10rem' : '6rem'} 1rem 0rem 1rem;
 `;
 
 const globalCSS = css`

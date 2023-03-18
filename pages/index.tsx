@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import 'twin.macro';
 
 import SEO from '@/common/seo';
-import Home from '@/components/Container/Homepage';
+import Home from '@/components/Container/Home';
 
 const Index: NextPage = () => {
   return (
