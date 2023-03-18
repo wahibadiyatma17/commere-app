@@ -40,3 +40,6 @@ export const useRefHeight = (): [
 
   return [ref, height, calculateHeightFromRef];
 };
+
+export const getChildrenOnDisplayName = (children: any, displayName: string) =>
+  React.Children.map(children, (child) => (child.type.displayName === displayName ? child : null));

@@ -6,6 +6,7 @@ import 'twin.macro';
 import MobileOnlyLayout from '@/components/Layout';
 import { MENU_TAB } from '@/common/constants';
 import { BaseMenuTabType, MenuTabNameType } from '@/common/types/home';
+import HomeContent from './HomeContent';
 
 const Home: FC = () => {
   const [activeTab, setActiveTab] = useState<MenuTabNameType>('Home');
@@ -28,7 +29,7 @@ const Home: FC = () => {
               <FiLogOut size={20} color={'#EF4444'} />
             </div>
           </div>
-          {renderActiveTab()}
+          <div tw="w-full">{renderActiveTab()}</div>
         </div>
       </Tabs>
     </MobileOnlyLayout>
@@ -40,8 +41,8 @@ export default Home;
 const renderActiveTab = () => {
   return (
     <TabPanels>
-      <TabPanel>
-        <p>one!</p>
+      <TabPanel w={'100%'} p={0}>
+        <HomeContent />
       </TabPanel>
       <TabPanel>
         <p>two!</p>
