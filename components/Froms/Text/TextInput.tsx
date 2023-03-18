@@ -1,4 +1,5 @@
 import React from 'react';
+import { BiErrorCircle } from 'react-icons/bi';
 import { css, styled } from 'twin.macro';
 
 import { InputProps } from '@/common/types/Input';
@@ -32,6 +33,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       </StyledInputWrapper>
       {error && (
         <div className="error-container">
+          <BiErrorCircle size={12} color={'#d21c1c'} />
           <span className="error-text">{error}</span>
         </div>
       )}
@@ -143,6 +145,8 @@ export const Field: any = styled(
   .help-container {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
+    gap: 0.25rem;
     margin-top: 0.25rem;
   }
 
