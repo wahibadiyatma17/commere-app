@@ -53,7 +53,7 @@ const Home: FC = () => {
                 ))}
               </TabList>
             </div>
-            <div tw="w-[20%] flex justify-end" onClick={() => onLoggedOut()}>
+            <div tw="w-[20%] flex justify-end cursor-pointer" onClick={() => onLoggedOut()}>
               <FiLogOut size={20} color={'#EF4444'} />
             </div>
           </div>
