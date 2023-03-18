@@ -15,11 +15,6 @@ const HomeContent: FC = () => {
           name="Alamat"
           content="Jalan Sepakat X No.85A, Cilangkap, Cipayung, Jakarta Timur"
         />
-        <div tw="mt-10 w-full  max-w-[80%] mx-auto">
-          <StyledButton onClick={() => setShowCompleteProfileModal(true)}>
-            Lengkapi data diri anda
-          </StyledButton>
-        </div>
       </div>
       {showCompleteProfileModal && (
         <CompleteProfileModal

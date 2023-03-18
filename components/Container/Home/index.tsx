@@ -7,12 +7,14 @@ import MobileOnlyLayout from '@/components/Layout';
 import { MENU_TAB } from '@/common/constants';
 import { BaseMenuTabType, MenuTabNameType } from '@/common/types/home';
 import HomeContent from './HomeContent';
+import CartContent from './CartContent';
+import StoreContent from './StoreContent';
 
 const Home: FC = () => {
   const [activeTab, setActiveTab] = useState<MenuTabNameType>('Home');
 
   return (
-    <MobileOnlyLayout hasHeader={false} hasFooter={false}>
+    <MobileOnlyLayout hasHeader={false} hasFooter={activeTab !== 'Store'}>
       <Tabs colorScheme={'green'}>
         <div tw="flex flex-col gap-4">
           <div tw="w-full flex justify-between items-center">
@@ -41,14 +43,14 @@ export default Home;
 const renderActiveTab = () => {
   return (
     <TabPanels>
-      <TabPanel w={'100%'} p={0}>
+      <TabPanel p={0}>
         <HomeContent />
       </TabPanel>
-      <TabPanel>
-        <p>two!</p>
+      <TabPanel p={0}>
+        <StoreContent />
       </TabPanel>
-      <TabPanel>
-        <p>three!</p>
+      <TabPanel p={0}>
+        <CartContent />
       </TabPanel>
     </TabPanels>
   );

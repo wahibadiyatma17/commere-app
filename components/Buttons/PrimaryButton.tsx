@@ -4,7 +4,7 @@ import { styled } from 'twin.macro';
 type PrimaryButtonProps = {
   children?: React.ReactNode;
   variant?: 'solid' | 'outline';
-  size?: 'lg' | 'md';
+  size?: 'lg' | 'md' | 'sm';
   onClick?: () => void;
 };
 
@@ -24,14 +24,19 @@ const StyledButton = styled.button<Pick<PrimaryButtonProps, 'variant' | 'size'>>
   align-items: center;
   justify-content: center;
   border: ${(props) => (props.variant === 'solid' ? 'none' : '1px solid #388067')};
-  padding: ${(props) => (props.size === 'lg' ? '0.75rem 1rem' : '0.5rem 0.75rem')};
-  font-size: 1rem;
+  padding: ${(props) =>
+    props.size === 'lg'
+      ? '0.75rem 1rem'
+      : props.size == 'md'
+      ? '0.5rem 0.75rem'
+      : '0.25rem 0.5rem'};
+  font-size: ${(props) => (props.size === 'sm' ? '0.75rem' : '1rem')};
   line-height: 1.25rem;
   background-color: ${(props) => (props.variant === 'solid' ? '#388067' : '#ffffff')};
   color: ${(props) => (props.variant === 'solid' ? '#ffffff' : '#388067')};
   font-weight: 500;
   width: 100%;
-  border-radius: 0.75rem;
+  border-radius: ${(props) => (props.size === 'sm' ? '0.5rem' : '0.75rem')};
 
   :disabled {
     cursor: not-allowed;
