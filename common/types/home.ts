@@ -6,3 +6,7 @@ export interface BaseMenuTabType {
 }
 
 export type MenuTabsProps = Array<BaseMenuTabType>;
+
+export type BaseActiveTabProps = {
+  submitRef: React.MutableRefObject<any>;
+};

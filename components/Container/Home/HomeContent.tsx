@@ -1,9 +1,11 @@
+import { BaseActiveTabProps } from '@/common/types/home';
 import React, { FC, useState } from 'react';
 import { GoChevronRight } from 'react-icons/go';
 import { styled } from 'twin.macro';
 import CompleteProfileModal from './components/CompleteProfileModal';
 
-const HomeContent: FC = () => {
+const HomeContent: FC<BaseActiveTabProps> = (props) => {
+  const { submitRef } = props;
   const [showCompleteProfileModal, setShowCompleteProfileModal] = useState<boolean>(false);
   return (
     <>
@@ -15,6 +17,7 @@ const HomeContent: FC = () => {
           name="Alamat"
           content="Jalan Sepakat X No.85A, Cilangkap, Cipayung, Jakarta Timur"
         />
+        <button tw="hidden" ref={submitRef} onClick={() => setShowCompleteProfileModal(true)} />
       </div>
       {showCompleteProfileModal && (
         <CompleteProfileModal
