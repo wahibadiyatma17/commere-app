@@ -1,24 +1,24 @@
 import { DefaultSeoProps } from 'next-seo';
 
 const NEXT_SEO_CONFIG = {
-  defaultTitle: 'Company Title',
-  description: 'Comapny Description',
+  defaultTitle: 'Logkar Commetce',
+  description: 'Logkar Commerce',
   canonical: '#',
   openGraph: {
     type: 'website',
-    title: 'Company',
-    description: 'Comapny Description',
+    title: 'Logkar',
+    description: 'Logkar Commerce',
     images: [
       {
-        url: '/vercel.svg',
-        width: 640,
-        height: 640,
-        alt: 'company-logo',
+        url: '/icon/icon-logkar.png',
+        alt: 'logkar commerce-icon',
+        width: 120,
+        height: 120,
       },
     ],
     url: '#',
     locale: 'en_US',
-    site_name: 'Company',
+    site_name: 'Logkar',
   },
   twitter: {
     cardType: 'summary',
