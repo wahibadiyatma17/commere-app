@@ -1,5 +1,6 @@
 import React from 'react';
 import * as PropTypes from 'prop-types';
+import { IoIosClose } from 'react-icons/io';
 import 'twin.macro';
 
 import {
@@ -14,7 +15,7 @@ import {
   ModalFooterProps,
   ModalContentProps,
 } from '@chakra-ui/react';
-import { getChildrenOnDisplayName, useWindowSize } from '@/common/utils/helpers';
+import { getChildrenOnDisplayName } from '@/common/utils/helpers';
 
 interface BasePopupModalProps {
   isOpen: boolean;
@@ -52,7 +53,10 @@ const PopUpModal = ({
       id={modalId}
     >
       <ModalOverlay />
-      <ModalContent tw="py-2 flex items-center mx-4" {...modalContentProps}>
+      <ModalContent tw="py-2 flex items-center mx-4 relative" {...modalContentProps}>
+        <div tw="absolute right-2 top-2 cursor-pointer" onClick={() => onClose()}>
+          <IoIosClose size={28} />
+        </div>
         {title}
         {body}
         {footer}
