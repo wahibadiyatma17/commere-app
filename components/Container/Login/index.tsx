@@ -33,7 +33,7 @@ const Login: FC = () => {
 
   const onClick = (data: any) => {
     const loggedInData = {
-      id: data.id,
+      email: data.email,
       password: data.password,
       isLoggedIn: true,
     } as AccountLoginType;
@@ -56,12 +56,12 @@ const Login: FC = () => {
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onClick)} tw="space-y-4 pr-7 w-full" id="hook-form">
               <ControlledTextInput
-                type={'text'}
-                name="id"
+                type={'email'}
+                name="email"
                 placeholder="Masukkan email"
                 control={control}
                 rules={{ required: true, minLength: 3, maxLength: 30 }}
-                error={errors.id && getEmailValidationErrorMsg(String(errors.id.type))}
+                error={errors.email && getEmailValidationErrorMsg(String(errors.email.type))}
               />
               <ControlledTextInput
                 type={isShowPassowrd ? 'text' : 'password'}

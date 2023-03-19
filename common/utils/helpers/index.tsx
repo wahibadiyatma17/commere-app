@@ -43,3 +43,13 @@ export const useRefHeight = (): [
 
 export const getChildrenOnDisplayName = (children: any, displayName: string) =>
   React.Children.map(children, (child) => (child.type.displayName === displayName ? child : null));
+
+export const currencyFormat = (price: number, options?: Intl.NumberFormatOptions) => {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+    ...options,
+  }).format(price);
+};

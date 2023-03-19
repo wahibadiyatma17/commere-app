@@ -7,16 +7,36 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { ControlledTextInput } from '@/components/Froms/Text';
 import { ControlledTextArea } from '@/components/Froms/TextArea';
 import PrimaryButton from '@/components/Buttons/PrimaryButton';
+import { useAccountStore } from '@/common/store/accountStore';
+import toast from 'react-hot-toast';
+import {
+  getEmailValidationErrorMsg,
+  getPhoneNumberValidationErrorMsg,
+} from '@/common/utils/form/ValidationFrom';
 
 type CompleteProfileModalProps = BaseModalProps;
 
 const CompleteProfileModal: FC<CompleteProfileModalProps> = (props) => {
   const { isOpen, onClose } = props;
   const methods = useForm();
-  const submitRef = useRef<any>(null);
-  const { handleSubmit, control } = methods;
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isValid },
+  } = methods;
+  const accountStore = useAccountStore();
 
-  const onSubmit = () => {
+  const onSubmit = (data: any) => {
+    const dataEditProfile = {
+      firstName: data.firstname,
+      lastName: data.lastname,
+      email: data.email,
+      phoneNumber: data.phone_number,
+      address: data.address,
+    };
+    accountStore.onEditProfile(dataEditProfile);
+    accountStore.onProfileCompleted(true);
+    toast.success('Perubahan profile berhasil disimpan!');
     onClose();
   };
 
@@ -33,9 +53,11 @@ const CompleteProfileModal: FC<CompleteProfileModalProps> = (props) => {
               <ControlledTextInput
                 type={'text'}
                 name="firstname"
+                defaultValue={accountStore.firstName}
                 placeholder="Masukkan nama depan"
                 control={control}
                 rules={{ required: true }}
+                error={errors.firstname && 'Nama depan wajib diisi'}
               />
             </div>
             <div tw="flex flex-col gap-1">
@@ -43,9 +65,10 @@ const CompleteProfileModal: FC<CompleteProfileModalProps> = (props) => {
               <ControlledTextInput
                 type={'text'}
                 name="lastname"
+                defaultValue={accountStore.lastName}
                 placeholder="Masukkan nama belakang"
                 control={control}
-                rules={{ required: true }}
+                rules={{ required: false }}
               />
             </div>
             <div tw="flex flex-col gap-1">
@@ -53,9 +76,11 @@ const CompleteProfileModal: FC<CompleteProfileModalProps> = (props) => {
               <ControlledTextInput
                 type={'email'}
                 name="email"
+                defaultValue={accountStore.email}
                 placeholder="Masukkan email"
                 control={control}
                 rules={{ required: true }}
+                error={errors.email && getEmailValidationErrorMsg(String(errors.email.type))}
               />
             </div>
             <div tw="flex flex-col gap-1">
@@ -63,9 +88,22 @@ const CompleteProfileModal: FC<CompleteProfileModalProps> = (props) => {
               <ControlledTextInput
                 type={'number'}
                 name="phone_number"
+                defaultValue={accountStore.phoneNumber}
                 placeholder="Masukkan nomor telepon"
                 control={control}
-                rules={{ required: true }}
+                prefix={'+62'}
+                rules={{
+                  required: true,
+                  minLength: 10,
+                  maxLength: 13,
+                  validate: (value) => {
+                    return value.charAt(0) !== String(0);
+                  },
+                }}
+                error={
+                  errors.phone_number &&
+                  getPhoneNumberValidationErrorMsg(String(errors.phone_number.type))
+                }
               />
             </div>
             <div tw="flex flex-col gap-1">
@@ -73,22 +111,20 @@ const CompleteProfileModal: FC<CompleteProfileModalProps> = (props) => {
               <ControlledTextArea
                 type={'text'}
                 name="address"
+                defaultValue={accountStore.address}
                 placeholder="Masukkan alamat lengkap"
                 control={control}
                 rules={{ required: true }}
+                error={errors.address && 'Alamat wajib diisi'}
               />
             </div>
-            <button ref={submitRef} tw="hidden" />
           </form>
         </FormProvider>
       </PopUpModal.Body>
       <PopUpModal.Footer>
         <div tw="w-full h-full  flex gap-4 items-center">
-          <PrimaryButton size="md" onClick={() => onClose()}>
+          <PrimaryButton size="md" form={'hook-form'} type={'submit'}>
             Simpan
-          </PrimaryButton>
-          <PrimaryButton variant="outline" size="md" onClick={() => onClose()}>
-            Batal
           </PrimaryButton>
         </div>
       </PopUpModal.Footer>

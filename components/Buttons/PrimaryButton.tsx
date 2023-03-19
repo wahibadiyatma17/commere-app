@@ -6,12 +6,30 @@ type PrimaryButtonProps = {
   variant?: 'solid' | 'outline';
   size?: 'lg' | 'md' | 'sm';
   onClick?: () => void;
+  type?: 'submit' | 'button' | 'reset';
+  form?: string;
+  disabled?: boolean;
 };
 
 const PrimaryButton: FC<PrimaryButtonProps> = (props) => {
-  const { children, variant = 'solid', onClick = () => {}, size = 'lg' } = props;
+  const {
+    children,
+    variant = 'solid',
+    onClick = () => {},
+    size = 'lg',
+    form = 'hook-form',
+    type = 'submit',
+    disabled = false,
+  } = props;
   return (
-    <StyledButton variant={variant} onClick={() => onClick()} size={size}>
+    <StyledButton
+      variant={variant}
+      onClick={() => onClick()}
+      size={size}
+      form={form}
+      type={type}
+      disabled={disabled}
+    >
       {children}
     </StyledButton>
   );

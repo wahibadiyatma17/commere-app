@@ -17,10 +17,7 @@ const Home: FC = () => {
   const [activeTab, setActiveTab] = useState<MenuTabNameType>('Home');
   const router = useRouter();
   const accountStore = useAccountStore();
-  const submitRef = useRef<any>(null);
-  const onSubmit = () => {
-    submitRef?.current?.click();
-  };
+  const submitRef = useRef<HTMLButtonElement>(null);
 
   const onLoggedOut = () => {
     accountStore.onLoggedOut;
@@ -29,16 +26,16 @@ const Home: FC = () => {
   };
 
   useEffect(() => {
-    if (!accountStore.accountData.isLoggedIn) router.push('/login');
-  }, [accountStore.accountData.isLoggedIn]);
+    if (!accountStore.isLoggedIn) router.push('/login');
+  }, [accountStore.isLoggedIn]);
 
   return (
     <MobileOnlyLayout
       hasHeader={false}
-      hasFooter={activeTab !== 'Store'}
+      hasFooter={activeTab === 'Cart'}
       buttonFooterprops={{
         text: getButtonText(activeTab),
-        onClick: () => onSubmit(),
+        onClick: () => submitRef?.current?.click(),
       }}
     >
       <Tabs colorScheme={'green'}>
@@ -66,11 +63,11 @@ const Home: FC = () => {
 
 export default Home;
 
-const renderActiveTab = (submitRef: React.MutableRefObject<any>) => {
+const renderActiveTab = (submitRef: React.MutableRefObject<HTMLButtonElement | null>) => {
   return (
     <TabPanels>
       <TabPanel p={0}>
-        <HomeContent submitRef={submitRef} />
+        <HomeContent />
       </TabPanel>
       <TabPanel p={0}>
         <StoreContent />

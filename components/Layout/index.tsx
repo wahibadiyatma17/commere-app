@@ -47,7 +47,9 @@ const MobileOnlyLayout: FC<MobileOnlyLayoutProps> = (props) => {
             </div>
           )}
         </div>
-        <main css={mainCSS(hasHeader)}>{children}</main>
+        <main suppressHydrationWarning css={mainCSS(hasHeader)}>
+          {children}
+        </main>
         {hasFooter && (
           <div
             ref={footerNavigationWrapperRef as MutableRefObject<HTMLDivElement>}

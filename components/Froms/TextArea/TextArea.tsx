@@ -38,8 +38,8 @@ const TextArea: FC<TextAreaProps> = React.forwardRef(
           fontSize={'0.875rem'}
           css={{
             '&:focus': {
-              borderColor: error !== undefined ? '#D21C1C' : '#ff9c86',
-              boxShadow: error !== undefined ? '0 0 0 1px #D21C1C' : '0 0 0 1px #ff9c86',
+              borderColor: error !== undefined ? '#D21C1C' : '#388067',
+              boxShadow: error !== undefined ? '0 0 0 1px #D21C1C' : '0 0 0 1px #388067',
             },
           }}
           {...other}

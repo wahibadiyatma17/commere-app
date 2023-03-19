@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Toaster } from 'react-hot-toast';
 import { QueryClientProvider } from 'react-query';
+import { HydrationProvider, Client } from 'react-hydration-provider';
 
 import queryClient from '@/common/config/queryClient';
 import 'styles/globals.css';
@@ -17,11 +18,19 @@ import DefaultSEO from '@/common/seo/config';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider>
-        <DefaultSEO />
-        <Toaster containerStyle={{ zIndex: 10000 }} position="top-center" reverseOrder={false} />
-        <Component {...pageProps} />
-      </ChakraProvider>
+      <HydrationProvider>
+        <Client>
+          <ChakraProvider>
+            <DefaultSEO />
+            <Toaster
+              containerStyle={{ zIndex: 10000 }}
+              position="top-center"
+              reverseOrder={false}
+            />
+            <Component {...pageProps} />
+          </ChakraProvider>
+        </Client>
+      </HydrationProvider>
     </QueryClientProvider>
   );
 }

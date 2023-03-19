@@ -1,3 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 
-module.exports = {};
+module.exports = {
+  plugins: [require("@tailwindcss/line-clamp")],
+};

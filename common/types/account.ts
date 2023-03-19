@@ -1,11 +1,25 @@
 export type AccountLoginType = {
-  id: string;
-  password: string;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  address?: string;
+  email?: string;
+  password?: string;
   isLoggedIn: boolean;
+  isProfileCompleted?: boolean;
 };
 
 export type AccountStoreDataType = {
-  accountData: AccountLoginType;
-  onLoggedIn: (data: AccountLoginType) => void;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  address?: string;
+  email?: string;
+  password?: string;
+  isLoggedIn: boolean;
+  isProfileCompleted?: boolean;
+  onProfileCompleted: (b: boolean) => void;
+  onLoggedIn: (data: Pick<AccountLoginType, 'email' | 'password' | 'isLoggedIn'>) => void;
+  onEditProfile: (data: Omit<AccountLoginType, 'password' | 'isLoggedIn'>) => void;
   onLoggedOut: () => void;
 };
